@@ -1,6 +1,7 @@
 @import "~bootstrap";
 @import "SearchSection";
+@import "../components/ThemeCard/ThemeCard";
 
-.barebone-home {
-  height: calc(100vh - 86px - 100px);
+main {
+  min-height: calc(100vh - 86px - 100px);
 }

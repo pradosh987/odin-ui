@@ -6,10 +6,12 @@ interface IProps {
 
 export const SearchSection = ({ onSubmit }: IProps) => {
   const [query, setQuery] = useState("");
-  const onFormSubmit = (event: React.FormEvent) => {
+
+  const onFormSubmit = useCallback((event) => {
     event.preventDefault();
-    onSubmit(query);
-  };
+    const formData = new FormData(event.target);
+    onSubmit(formData.get("search-box").toString());
+  }, []);
 
   const onChange = useCallback(
     debounce((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,6 +20,7 @@ export const SearchSection = ({ onSubmit }: IProps) => {
     }, 300),
     []
   );
+
   return (
     <section className="search-section text-center my-5 w-100">
       <h1 className="display-3">
@@ -37,6 +40,7 @@ export const SearchSection = ({ onSubmit }: IProps) => {
           <input
             type="text"
             className="w-100 shadow"
+            name="search-box"
             onChange={(e) => {
               e.persist();
               onChange(e);

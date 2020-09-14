@@ -4,7 +4,7 @@ export const Header = () => {
   return (
     <header className="">
       <div
-        className=" p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm"
+        className=" p-3 px-md-4 bg-white border-bottom shadow-sm"
         style={{ height: 70 }}
       >
         <div className="container d-flex flex-column flex-md-row align-items-center">
