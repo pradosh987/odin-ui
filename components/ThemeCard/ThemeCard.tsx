@@ -1,4 +1,5 @@
 import React from "react";
+import { themeVisitUrl } from "../../services/api_service";
 
 interface IProps {
   theme: any;
@@ -12,7 +13,12 @@ export const ThemeCard = ({ theme }: IProps) => {
         alt={theme.name}
       />
       <div className="card-body">
-        <a href="#" className="text-dark" target="_blank" rel="_nofollow">
+        <a
+          href={themeVisitUrl(theme.id)}
+          className="text-dark"
+          target="_blank"
+          rel="_nofollow"
+        >
           <h5 className="card-title">{theme.name}</h5>
         </a>
       </div>
