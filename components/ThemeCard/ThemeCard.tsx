@@ -6,7 +6,7 @@ interface IProps {
 }
 export const ThemeCard = ({ theme }: IProps) => {
   return (
-    <div className="card theme-card shadow-sm">
+    <div className="card theme-card shadow-sm" key={theme.id}>
       <img
         src={theme.featuredImageUrl}
         className="card-img-top shadow-sm"

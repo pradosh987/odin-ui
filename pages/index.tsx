@@ -51,7 +51,7 @@ export default function Home() {
               <hr />
               <div className="row grid">
                 {searchResults.map((theme) => (
-                  <div className="col-md-6 col-lg-4 mb-4">
+                  <div className="col-md-6 col-lg-4 mb-4" key={theme.id}>
                     <ThemeCard theme={theme} />
                   </div>
                 ))}

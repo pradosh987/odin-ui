@@ -1,25 +1,49 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { debounce } from "lodash";
+import { TypeHeadItem } from "../TypeheadItem/TypeheadItem";
+import { CancelTokenSource } from "axios";
+import { suggest } from "../../services/api_service";
+
 interface IProps {
   onSubmit: (query: string) => void;
 }
 
 export const SearchSection = ({ onSubmit }: IProps) => {
-  const [query, setQuery] = useState("");
+  const inputRef = useRef(undefined);
+  const [typeheadToken, setTypeheadToken]: [
+    CancelTokenSource | undefined,
+    React.Dispatch<undefined | CancelTokenSource>
+  ] = useState();
 
   const onFormSubmit = useCallback((event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    onSubmit(formData.get("search-box").toString());
+    onSubmit(inputRef.current.value);
   }, []);
 
   const onChange = useCallback(
-    debounce((event: React.ChangeEvent<HTMLInputElement>) => {
-      const query = event.target.value;
-      setQuery(query);
+    debounce(() => {
+      const query = inputRef.current.value;
+      console.log(query);
+      typeheadToken?.cancel("MULTIPLE_REQUESTS");
+
+      if (query.length < 3) {
+        setSuggestions([]);
+        return;
+      }
+
+      const [promise, token] = suggest(query);
+      setTypeheadToken(token);
+      promise.then(setSuggestions).catch(console.warn);
     }, 300),
-    []
+    [typeheadToken]
   );
+
+  const [suggestions, setSuggestions] = useState([]);
+  const onSuggestionSelect = useCallback((value) => {
+    inputRef.current.value = value;
+    onSubmit(value);
+    setSuggestions([]);
+  }, []);
 
   return (
     <section className="search-section text-center my-5 w-100">
@@ -31,23 +55,34 @@ export const SearchSection = ({ onSubmit }: IProps) => {
       </p>
 
       <div className="row justify-content-center my-5">
-        <form
-          className="col-md-6"
-          // @ts-ignore
-
-          onSubmit={onFormSubmit}
-        >
+        <form className="col-md-6" onSubmit={onFormSubmit}>
           <input
             type="text"
             className="w-100 shadow"
-            name="search-box"
+            autoFocus={true}
+            ref={inputRef}
             onChange={(e) => {
               e.persist();
-              onChange(e);
+              onChange();
             }}
           />
         </form>
       </div>
+      {suggestions.length > 0 && (
+        <div className="row mt-n5 d-flex justify-content-center position-relative">
+          <div className="col-md-6">
+            <ul className="suggestions w-100 list-group">
+              {suggestions.map((s) => (
+                <TypeHeadItem
+                  item={s}
+                  key={s.value}
+                  onClick={onSuggestionSelect}
+                />
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
