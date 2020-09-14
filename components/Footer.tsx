@@ -4,7 +4,7 @@ import React from "react";
 export const Footer = () => {
   return (
     <footer className={styles.footer}>
-      Made By:
+      ❣ Made By:
       <a
         href="https://pradoshgaonkar.dev"
         target="_blank"
@@ -13,6 +13,7 @@ export const Footer = () => {
       >
         Pradosh Gaonkar
       </a>
+      ❣
     </footer>
   );
 };
