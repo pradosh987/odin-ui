@@ -6,7 +6,7 @@ export const Footer = () => {
     <footer className={styles.footer}>
       ❣ Made By:
       <a
-        href="https://pradoshgaonkar.dev"
+        href="https://twitter.com/pradoshgaonkar"
         target="_blank"
         rel="noopener noreferrer nofollow"
         className="pl-2"
