@@ -66,7 +66,8 @@ export const SearchSection = ({ onSubmit }: IProps) => {
   return (
     <section className="search-section text-center my-5 w-100">
       <h1 className="display-3">
-        Expo<span className="text-primary">Themes</span>
+        <span className="text-primary">Dig</span>
+        <span className="text-dark">Themes</span>
       </h1>
       <p className="lead font-weight-normal">
         Search Engine for Windows Themes
