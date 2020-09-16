@@ -6,6 +6,13 @@ interface IProps {
   theme: Theme;
 }
 
+const iconsTag = ({ icons }: Theme) =>
+  icons ? <small>{icons} Icons</small> : "";
+
+const wallpapersTag = ({ wallpapers }: Theme) => (
+  <small>{wallpapers ? `${wallpapers} Wallpapers` : "N/A"}</small>
+);
+
 export const ThemeCard = ({ theme }: IProps) => {
   return (
     <div className="card theme-card shadow-sm" key={theme.id}>
@@ -23,6 +30,11 @@ export const ThemeCard = ({ theme }: IProps) => {
         >
           <h5 className="card-title">{theme.name}</h5>
         </a>
+      </div>
+      <div className="card-footer d-flex justify-content-between">
+        <small>{theme.website}</small>
+        {iconsTag(theme)}
+        {wallpapersTag(theme)}
       </div>
     </div>
   );
