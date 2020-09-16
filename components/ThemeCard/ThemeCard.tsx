@@ -14,16 +14,21 @@ const wallpapersTag = ({ wallpapers }: Theme) => (
 );
 
 export const ThemeCard = ({ theme }: IProps) => {
+  const visitUrl = themeVisitUrl(theme);
+
   return (
     <div className="card theme-card shadow-sm" key={theme.id}>
-      <img
-        src={theme.images[0]?.thumb}
-        className="card-img-top shadow-sm"
-        alt={theme.name}
-      />
+      <a href={visitUrl} target="_blank" rel="_nofollow">
+        {" "}
+        <img
+          src={theme.images[0]?.thumb}
+          className="card-img-top shadow-sm"
+          alt={theme.name}
+        />
+      </a>
       <div className="card-body">
         <a
-          href={themeVisitUrl(theme.id)}
+          href={visitUrl}
           className="text-dark"
           target="_blank"
           rel="_nofollow"

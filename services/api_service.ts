@@ -7,8 +7,8 @@ export const search = (q: string): Promise<{ data: Theme[] }> => {
   return axios.get("/search", { params: { q } }).then((res) => res.data);
 };
 
-export const themeVisitUrl = (themeId: number) =>
-  `${process.env.NEXT_PUBLIC_API_ORIGIN}/visit/${themeId}`;
+export const themeVisitUrl = ({ id }: Theme) =>
+  `${process.env.NEXT_PUBLIC_API_ORIGIN}/visit/${id}`;
 
 export const suggest = (q: string): [Promise<any[]>, CancelTokenSource] => {
   const source = axios.CancelToken.source();
