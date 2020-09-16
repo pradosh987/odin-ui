@@ -1,14 +1,16 @@
 import React from "react";
 import { themeVisitUrl } from "../../services/api_service";
+import { Theme } from "../../interfaces/Theme.interface";
 
 interface IProps {
-  theme: any;
+  theme: Theme;
 }
+
 export const ThemeCard = ({ theme }: IProps) => {
   return (
     <div className="card theme-card shadow-sm" key={theme.id}>
       <img
-        src={theme.featuredImageUrl}
+        src={theme.images[0]?.thumb}
         className="card-img-top shadow-sm"
         alt={theme.name}
       />

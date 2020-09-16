@@ -4,6 +4,7 @@ import { Footer } from "../components/Footer";
 import { SearchSection } from "../components/SearchSection/SearchSection";
 import { search } from "../services/api_service";
 import { ThemeCard } from "../components/ThemeCard/ThemeCard";
+import { Theme } from "../interfaces/Theme.interface";
 
 export default function Home() {
   const [folded, setFolded] = useState(false);
@@ -12,17 +13,21 @@ export default function Home() {
     string | undefined,
     React.Dispatch<string | undefined>
   ] = useState();
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults]: [
+    Theme[],
+    React.Dispatch<Theme[]>
+  ] = useState([]);
 
   const onSearch = useCallback(async (query: string) => {
     console.log(query);
     if (query) {
       setSearching(true);
       try {
-        const data = await search(query);
+        const response = await search(query);
+        const themes = response.data;
         setSearchTerm(query);
-        setSearchResults(data);
-        console.log(data);
+        setSearchResults(themes);
+        console.log(themes);
       } catch (e) {
         console.error(e);
       } finally {
