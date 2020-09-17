@@ -1,10 +1,14 @@
 import React from "react";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
+import Head from "next/head";
 
 const Page = () => {
   return (
     <div>
+      <Head>
+        <title>Terms and Privacy Policy -DigThemes</title>
+      </Head>
       <Header />
 
       <main className="container py-5">

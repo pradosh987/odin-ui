@@ -5,6 +5,7 @@ import { SearchSection } from "../components/SearchSection/SearchSection";
 import { search } from "../services/api_service";
 import { ThemeCard } from "../components/ThemeCard/ThemeCard";
 import { Theme } from "../interfaces/Theme.interface";
+import Head from "next/head";
 
 export default function Home() {
   const [folded, setFolded] = useState(false);
@@ -37,6 +38,14 @@ export default function Home() {
   }, []);
   return (
     <div className="">
+      <Head>
+        <title>DigThemes - Search Engine for Windows Themes</title>
+        <meta
+          name="description"
+          content="Search and find themes for Windows 10 with DigThemes - A Search Engine for Themes that aggregates and curates beautiful theme for Windows"
+        />
+        <meta name="author" content="Pradosh Gaonkar" />
+      </Head>
       <Header />
 
       <main>
