@@ -10,8 +10,14 @@ const iconsTag = ({ icons }: Theme) =>
   icons ? <small>{icons} Icons</small> : "";
 
 const wallpapersTag = ({ wallpapers }: Theme) => (
-  <small>{wallpapers ? `${wallpapers} Wallpapers` : "N/A"}</small>
+  <small>{wallpapers ? `${wallpapers} Wallpapers` : ""}</small>
 );
+
+const thumbUrl = ({ images }: Theme) => {
+  const featuredIndex = (images || []).findIndex((i) => i.featured);
+  const image = featuredIndex > -1 ? images[featuredIndex] : images[0];
+  return image?.thumb;
+};
 
 export const ThemeCard = ({ theme }: IProps) => {
   const visitUrl = themeVisitUrl(theme);
@@ -21,7 +27,7 @@ export const ThemeCard = ({ theme }: IProps) => {
       <a href={visitUrl} target="_blank" rel="_nofollow">
         {" "}
         <img
-          src={theme.images[0]?.thumb}
+          src={thumbUrl(theme)}
           className="card-img-top shadow-sm"
           alt={theme.name}
         />
