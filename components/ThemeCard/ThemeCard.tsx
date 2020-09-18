@@ -1,6 +1,7 @@
 import React from "react";
 import { themeVisitUrl } from "../../services/api_service";
 import { Theme } from "../../interfaces/Theme.interface";
+import { Image } from "../Image/Image";
 
 interface IProps {
   theme: Theme;
@@ -25,12 +26,11 @@ export const ThemeCard = ({ theme }: IProps) => {
   return (
     <div className="card theme-card shadow-sm" key={theme.id}>
       <a href={visitUrl} target="_blank" rel="_nofollow">
-        {" "}
-        <img
+        <Image
           src={thumbUrl(theme)}
-          className="card-img-top shadow-sm"
           alt={theme.name}
-          height="280px"
+          className="card-img-top shadow-sm"
+          height={280}
         />
       </a>
       <div className="card-body">
