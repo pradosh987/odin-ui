@@ -19,3 +19,5 @@ export const suggest = (q: string): [Promise<any[]>, CancelTokenSource] => {
     source,
   ];
 };
+
+export const noImageUrl = `${process.env.NEXT_PUBLIC_CDN}/image_not_found.png`;

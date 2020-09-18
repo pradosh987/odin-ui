@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Loading from "../../assets/loading.svg";
+import { noImageUrl } from "../../services/api_service";
 
 interface IProps {
   src: string;
@@ -23,12 +24,13 @@ export const Image = ({ src, alt, className, height }: IProps) => {
       )}
 
       <img
-        src={src}
+        src={src || noImageUrl}
         style={{
           opacity: imageLoaded ? 100 : 0,
           transition: "visibility 0s linear 0s, opacity 300ms",
         }}
         onLoad={() => setImageLoaded(true)}
+        onError={() => setImageLoaded(true)}
         alt={alt || ""}
         className={className || ""}
         height={height}
