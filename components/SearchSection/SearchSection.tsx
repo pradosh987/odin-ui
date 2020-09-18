@@ -30,7 +30,6 @@ export const SearchSection = ({ onSubmit }: IProps) => {
   const onChange = useCallback(
     debounce(() => {
       const query = inputRef.current.value;
-      console.log(query);
       typeheadToken?.cancel("MULTIPLE_REQUESTS");
 
       if (query.length < 3) {

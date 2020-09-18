@@ -30,6 +30,7 @@ export const ThemeCard = ({ theme }: IProps) => {
           src={thumbUrl(theme)}
           className="card-img-top shadow-sm"
           alt={theme.name}
+          height="280px"
         />
       </a>
       <div className="card-body">

@@ -28,7 +28,6 @@ export default function Home() {
         const themes = response.data;
         setSearchTerm(query);
         setSearchResults(themes);
-        console.log(themes);
       } catch (e) {
         console.error(e);
       } finally {
