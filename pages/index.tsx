@@ -1,5 +1,5 @@
 import { Header } from "../components/Header";
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Footer } from "../components/Footer";
 import { SearchSection } from "../components/SearchSection/SearchSection";
 import { search } from "../services/api_service";
@@ -20,23 +20,23 @@ export default function Home() {
     React.Dispatch<Theme[]>
   ] = useState([]);
 
-  const onSearch = useCallback(async (query: string) => {
-    console.log(query);
-    if (query) {
+  useEffect(() => {
+    setSearchResults([]);
+    if (searchTerm) {
       setSearching(true);
-      setSearchResults([]);
-      try {
-        const response = await search(query);
-        const themes = response.data;
-        setSearchTerm(query);
-        setSearchResults(themes);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setSearching(false);
-      }
+      search(searchTerm)
+        .then((response) => {
+          const themes = response.data;
+          setSearchResults(themes);
+          setSearching(false);
+        })
+        .catch((e) => {
+          console.error(e);
+          setSearching(false);
+        });
     }
-  }, []);
+  }, [searchTerm]);
+
   return (
     <div className="">
       <Head>
@@ -51,7 +51,7 @@ export default function Home() {
 
       <main>
         <div className="container d-flex justify-content-center align-items-center w-100 h-100 ">
-          <SearchSection onSubmit={onSearch} />
+          <SearchSection onSubmit={setSearchTerm} />
         </div>
         <div className="container">
           {searchResults.length > 0 && (
