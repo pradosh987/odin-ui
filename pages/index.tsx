@@ -6,6 +6,7 @@ import { search } from "../services/api_service";
 import { ThemeCard } from "../components/ThemeCard/ThemeCard";
 import { Theme } from "../interfaces/Theme.interface";
 import Head from "next/head";
+import Loading from "../assets/loading.svg";
 
 export default function Home() {
   const [folded, setFolded] = useState(false);
@@ -23,6 +24,7 @@ export default function Home() {
     console.log(query);
     if (query) {
       setSearching(true);
+      setSearchResults([]);
       try {
         const response = await search(query);
         const themes = response.data;
@@ -70,6 +72,14 @@ export default function Home() {
                 ))}
               </div>
             </React.Fragment>
+          )}
+          {searching && (
+            <div className="d-flex justify-content-center align-items-center flex-column">
+              <Loading />
+              <h5 className="mt-3">
+                Just a moment please, we are searching for your themes...
+              </h5>
+            </div>
           )}
         </div>
       </main>
