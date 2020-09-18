@@ -9,6 +9,13 @@ export const Header = () => {
         style={{ height: 70 }}
       >
         <div className="container d-flex flex-column flex-md-row align-items-center">
+          <img
+            src="/digthemes_logo.png"
+            width="32px"
+            height="32px"
+            alt="DigThemes - Search Engine for Windows Themes"
+            className="mr-1"
+          />
           <h5 className="my-0 mr-md-auto font-weight-normal">
             <Link href="/">
               <a className="text-dark">
