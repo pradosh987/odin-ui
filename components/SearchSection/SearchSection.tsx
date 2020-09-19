@@ -21,6 +21,8 @@ export const SearchSection = ({ onSubmit }: IProps) => {
     React.Dispatch<undefined | CancelTokenSource>
   ] = useState();
 
+  useEffect(() => inputRef?.current?.focus(), [inputRef]);
+
   const onFormSubmit = useCallback((event) => {
     event.preventDefault();
     onSubmit(inputRef.current.value);
