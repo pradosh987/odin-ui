@@ -1,7 +1,8 @@
-import axios, { AxiosResponse, CancelToken, CancelTokenSource } from "axios";
+import axios, { CancelTokenSource } from "axios";
 import { Theme } from "../interfaces/Theme.interface";
 
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_ORIGIN;
+axios.defaults.timeout = 10000;
 
 export const search = (q: string): Promise<{ data: Theme[] }> => {
   return axios.get("/search", { params: { q } }).then((res) => res.data);
