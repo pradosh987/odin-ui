@@ -7,6 +7,7 @@ import { ThemeCard } from "../components/ThemeCard/ThemeCard";
 import { Theme } from "../interfaces/Theme.interface";
 import Head from "next/head";
 import Loading from "../assets/loading.svg";
+import Frown from "../node_modules/bootstrap-icons/icons/emoji-frown.svg";
 
 export default function Home() {
   const [folded, setFolded] = useState(false);
@@ -20,10 +21,16 @@ export default function Home() {
     React.Dispatch<Theme[]>
   ] = useState([]);
 
+  const [errorMessage, setErrorMessage]: [
+    string | undefined,
+    React.Dispatch<string | undefined>
+  ] = useState();
+
   useEffect(() => {
     setSearchResults([]);
     if (searchTerm) {
       setSearching(true);
+      setErrorMessage(undefined);
       search(searchTerm)
         .then((response) => {
           const themes = response.data;
@@ -33,6 +40,7 @@ export default function Home() {
         .catch((e) => {
           console.error(e);
           setSearching(false);
+          setErrorMessage("Oops something went wrong.");
         });
     }
   }, [searchTerm]);
@@ -79,6 +87,34 @@ export default function Home() {
               <h5 className="mt-3">
                 Just a moment please, we are searching for your themes...
               </h5>
+            </div>
+          )}
+
+          {!searching &&
+            searchResults.length === 0 &&
+            searchTerm?.length &&
+            !errorMessage && (
+              <div className="d-flex justify-content-center align-items-center flex-column">
+                <div style={{ fontSize: 100 }} className="text-primary">
+                  <Frown />
+                </div>
+                <h5 className="mt-3">
+                  Sorrry! we couldn't find anything for{" "}
+                  <span
+                    className="text-danger"
+                    style={{ textDecoration: "underline" }}
+                  >
+                    {searchTerm}
+                  </span>
+                </h5>
+              </div>
+            )}
+          {!searching && errorMessage && (
+            <div className="d-flex justify-content-center align-items-center flex-column">
+              <div style={{ fontSize: 100 }} className="text-primary">
+                <Frown />
+              </div>
+              <h5 className="mt-3">{errorMessage}</h5>
             </div>
           )}
         </div>
