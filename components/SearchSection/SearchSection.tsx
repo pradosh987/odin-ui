@@ -29,22 +29,22 @@ export const SearchSection = ({ onSubmit }: IProps) => {
     setSuggestions([]);
   }, []);
 
-  const onChange = useCallback(
-    debounce(() => {
-      const query = inputRef.current.value;
-      typeheadToken?.cancel("MULTIPLE_REQUESTS");
-
-      if (query.length < 3) {
-        setSuggestions([]);
-        return;
-      }
-
-      const [promise, token] = suggest(query);
-      setTypeheadToken(token);
-      promise.then(setSuggestions).catch(console.warn);
-    }, 300),
-    [typeheadToken]
-  );
+  // const onChange = useCallback(
+  //   debounce(() => {
+  //     const query = inputRef.current.value;
+  //     typeheadToken?.cancel("MULTIPLE_REQUESTS");
+  //
+  //     if (query.length < 3) {
+  //       setSuggestions([]);
+  //       return;
+  //     }
+  //
+  //     const [promise, token] = suggest(query);
+  //     setTypeheadToken(token);
+  //     promise.then(setSuggestions).catch(console.warn);
+  //   }, 300),
+  //   [typeheadToken]
+  // );
 
   const [suggestions, setSuggestions] = useState([]);
   const onSuggestionSelect = useCallback((value) => {
@@ -81,10 +81,10 @@ export const SearchSection = ({ onSubmit }: IProps) => {
             className="w-100 shadow"
             autoFocus={true}
             ref={inputRef}
-            onChange={(e) => {
-              e.persist();
-              onChange();
-            }}
+            // onChange={(e) => {
+            //   e.persist();
+            //   onChange();
+            // }}
           />
         </form>
       </div>
