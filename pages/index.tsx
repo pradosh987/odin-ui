@@ -134,11 +134,13 @@ export default function Home() {
             </div>
           )}
 
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onPaginate={setCurrentPage}
-          />
+          {!searching && (
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              onPaginate={setCurrentPage}
+            />
+          )}
         </div>
       </main>
 
