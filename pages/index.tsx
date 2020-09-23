@@ -1,5 +1,5 @@
 import { Header } from "../components/Header";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Footer } from "../components/Footer";
 import { SearchSection } from "../components/SearchSection/SearchSection";
 import { search } from "../services/api_service";
@@ -8,6 +8,7 @@ import { Theme } from "../interfaces/Theme.interface";
 import Head from "next/head";
 import Loading from "../assets/loading.svg";
 import Frown from "../node_modules/bootstrap-icons/icons/emoji-frown.svg";
+import { Pagination } from "../components/Pagination/Pagination";
 
 export default function Home() {
   const [folded, setFolded] = useState(false);
@@ -26,16 +27,26 @@ export default function Home() {
     React.Dispatch<string | undefined>
   ] = useState();
 
-  useEffect(() => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+
+  const resetSearch = useCallback(() => {
     setSearchResults([]);
+    setCurrentPage(1);
+    setTotalPages(0);
+  }, []);
+
+  useEffect(() => {
     if (searchTerm) {
       setSearching(true);
       setErrorMessage(undefined);
-      search(searchTerm)
+      search(searchTerm, currentPage || 1)
         .then((response) => {
           const themes = response.data;
-          setSearchResults(themes);
+          setSearchResults([...searchResults, ...themes]);
           setSearching(false);
+          setTotalPages(response.totalPages);
+          setCurrentPage(response.currentPage);
         })
         .catch((e) => {
           console.error(e);
@@ -43,7 +54,7 @@ export default function Home() {
           setErrorMessage("Oops something went wrong.");
         });
     }
-  }, [searchTerm]);
+  }, [searchTerm, currentPage]);
 
   return (
     <div className="">
@@ -59,7 +70,12 @@ export default function Home() {
 
       <main>
         <div className="container d-flex justify-content-center align-items-center w-100 h-100 ">
-          <SearchSection onSubmit={setSearchTerm} />
+          <SearchSection
+            onSubmit={(query) => {
+              setSearchTerm(query);
+              resetSearch();
+            }}
+          />
         </div>
         <div className="container">
           {searchResults.length > 0 && (
@@ -117,6 +133,12 @@ export default function Home() {
               <h5 className="mt-3">{errorMessage}</h5>
             </div>
           )}
+
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPaginate={setCurrentPage}
+          />
         </div>
       </main>
 

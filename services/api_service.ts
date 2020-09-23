@@ -4,8 +4,11 @@ import { Theme } from "../interfaces/Theme.interface";
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_ORIGIN;
 axios.defaults.timeout = 10000;
 
-export const search = (q: string): Promise<{ data: Theme[] }> => {
-  return axios.get("/search", { params: { q } }).then((res) => res.data);
+export const search = (
+  q: string,
+  page = 1
+): Promise<{ data: Theme[]; currentPage: number; totalPages: number }> => {
+  return axios.get("/search", { params: { q, page } }).then((res) => res.data);
 };
 
 export const themeVisitUrl = ({ id }: Theme) =>
